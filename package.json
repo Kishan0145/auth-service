@@ -5,7 +5,8 @@
    "scripts": {
       "dev": "node dist/server.js",
       "test": "echo \"Error: no test specified\" && exit 1",
-      "pretty": "npx prettier . --write"
+      "pretty": "npx prettier . --write",
+      "lint" : "npx eslint ."
    },
    "repository": {
       "type": "git",
@@ -19,8 +20,13 @@
    "homepage": "https://github.com/Kishan0145/auth-service#readme",
    "description": "",
    "devDependencies": {
+      "@eslint/js": "^9.39.1",
       "@types/node": "^24.10.1",
+      "eslint": "^9.39.1",
+      "globals": "^16.5.0",
+      "jiti": "^2.6.1",
       "prettier": "3.6.2",
-      "typescript": "^5.9.3"
+      "typescript": "^5.9.3",
+      "typescript-eslint": "^8.47.0"
    }
 }
