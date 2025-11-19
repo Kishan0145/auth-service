@@ -2,8 +2,9 @@
   "name": "auth-service",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "dev": "node dist/server.js",
+    "dev": "nodemon src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pretty": "npx prettier src/**/*.ts --write",
     "lint": "npx eslint src/**/*.ts",
@@ -29,11 +30,21 @@
     "husky": "^9.1.7",
     "jiti": "^2.6.1",
     "lint-staged": "^16.2.7",
+    "nodemon": "^3.1.11",
     "prettier": "3.6.2",
+    "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.47.0"
   },
   "lint-staged": {
-    "src/**/*.ts": ["npm run lint:fix", "npm run pretty","npm run lint"]
+    "src/**/*.ts": [
+      "npm run lint:fix",
+      "npm run pretty",
+      "npm run lint"
+    ]
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0"
   }
 }

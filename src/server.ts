@@ -1,5 +1,7 @@
+import { Config } from './config/index.js';
+
 const testFunction = (name: string) => {
-   console.log(`Hello, ${name}!`);
+   console.log(`abc ${name}, ${Config.PORT}!`);
 };
 
 testFunction('world');
