@@ -1,5 +1,5 @@
-const testFunction = (name:string)=>{
-      console.log(`Hello, ${name}!`);
-}
+const testFunction = (name: string) => {
+   console.log(`Hello, ${name}!`);
+};
 
-testFunction('World');
+testFunction('wew');
