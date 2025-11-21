@@ -17,7 +17,7 @@ export default defineConfig([
   },
   { files: ["**/*.js"], languageOptions: { sourceType: "commonjs" } },
   {
-    ignores : ["**/dist/**", "**/node_modules/**","tsconfig.json","package.json","package-lock.json","README.md"],
+    ignores : ["**/dist/**", "**/node_modules/**","tsconfig.json","package.json","package-lock.json","README.md","jest.config.js"],
   },
   
   tseslint.configs.recommended,
