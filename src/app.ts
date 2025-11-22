@@ -1,12 +1,9 @@
 import express from 'express';
 import { errorHandler } from './middleware/errorHandler.js';
+import userRoutes from './routes/users.route..js';
 
 const app = express();
+app.use('/auth/users', userRoutes);
 
-app.get('/', (req, res) => {
-   res.json('Hello world');
-});
-
-
-app.use(errorHandler)
+app.use(errorHandler);
 export default app;
