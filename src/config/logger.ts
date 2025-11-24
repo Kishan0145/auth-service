@@ -19,7 +19,7 @@ const fileRotateTransportForCombine = new winston.transports.DailyRotateFile({
 
 const { combine, timestamp, json } = winston.format;
 const logger = winston.createLogger({
-   silent: !(process.env.NODE_ENV === 'test'),
+   silent: !(Config.NODE_ENV === 'test'),
    level: Config.LOG_LEVEL || 'info',
    format: combine(timestamp(), json()),
    transports: [fileRotateTransportForErrors, fileRotateTransportForCombine],

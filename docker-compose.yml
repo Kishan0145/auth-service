@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   auth-service:
     image: auth-service:dev
@@ -7,25 +5,25 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     container_name: auth-service-dev
+    env_file:
+      - .env.${NODE_ENV}
     ports:
-      - 8080:8080
+      - ${PORT}:8080
     volumes:
       - .:/usr/src/app # this is binding
       - /usr/src/app/node_modules
     command: npm run dev
-    env_file:
-      - .env.dev
 
   database:
     image: postgres:17.6-alpine
     container_name: postgres-dev-auth-service
     restart: always
+    env_file:
+      - .env.${NODE_ENV}
     ports:
-      - 5432:5432
+      - "${DB_PORT}:5432"
     volumes: 
       - db_data:/var/lib/postgresql/data   # this is mounting
-    env_file:
-      - .env.dev
 
 volumes:
   db_data:

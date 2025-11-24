@@ -40,6 +40,10 @@
         "noUncheckedSideEffectImports": true,
         "moduleDetection": "force",
         "skipLibCheck": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "nodenext",
+        "strictPropertyInitialization": false
     },
     "include":["src/**/*"],
     "exclude":["node_modules","dist","tsconfig.json"]
