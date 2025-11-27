@@ -1,9 +1,11 @@
 import app from './app.js';
+import { AppDataSource } from './config/data-source.js';
 import { Config } from './config/index.js';
 
-const startServer = () => {
+const startServer = async () => {
    try {
-      app.listen(Config.PORT, () => {
+      await AppDataSource.initialize();
+      app.listen(Config.PORT, async () => {
          console.log(`Server listening at port ${Config.PORT}`);
       });
    } catch (e) {

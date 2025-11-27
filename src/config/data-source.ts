@@ -3,17 +3,23 @@ import { DataSource } from 'typeorm';
 import { User } from '../entity/User.js';
 import { Config } from './index.js';
 
-const { DB_PORT, POSTGRES_PASSWORD, POSTGRES_USERNAME, POSTGRES_DB, DB_HOST } =
-   Config;
-
+const {
+   DB_PORT,
+   POSTGRES_PASSWORD,
+   POSTGRES_USERNAME,
+   POSTGRES_DB,
+   DB_HOST,
+   NODE_ENV,
+} = Config;
+console.log(DB_HOST);
 export const AppDataSource = new DataSource({
    type: 'postgres',
    host: DB_HOST || 'localhost',
-   port: DB_PORT ? parseInt(DB_PORT) : 5432,
+   port: DB_PORT ? 5432 : 5432,
    username: POSTGRES_USERNAME || 'postgres',
    password: POSTGRES_PASSWORD || 'password',
    database: POSTGRES_DB || 'db_name',
-   synchronize: true,
+   synchronize: NODE_ENV == 'dev' || NODE_ENV == 'test',
    logging: false,
    entities: [User],
    migrations: [],
