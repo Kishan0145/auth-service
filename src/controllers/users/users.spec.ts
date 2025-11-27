@@ -102,5 +102,44 @@ describe('User registration', () => {
             .send(payload);
          expect(response.status).toBe(400);
       });
+      it('should return 400 if there is no lastName', async () => {
+         const payload = {
+            firstName: 'Kishan',
+            lastName: null,
+            email: 'test@gmail.com',
+            password: 'Test@1234',
+         };
+
+         const response = await request(app)
+            .post('/auth/users/register')
+            .send(payload);
+         expect(response.status).toBe(400);
+      });
+      it('should return 400 if there is no email', async () => {
+         const payload = {
+            firstName: 'Kishan',
+            lastName: 'Sharma',
+            email: null,
+            password: 'Test@1234',
+         };
+
+         const response = await request(app)
+            .post('/auth/users/register')
+            .send(payload);
+         expect(response.status).toBe(400);
+      });
+      it('should return 400 if there is no password', async () => {
+         const payload = {
+            firstName: 'Kishan',
+            lastName: 'Sharma',
+            email: 'test@gmail.com',
+            password: null,
+         };
+
+         const response = await request(app)
+            .post('/auth/users/register')
+            .send(payload);
+         expect(response.status).toBe(400);
+      });
    });
 });
