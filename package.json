@@ -5,7 +5,7 @@
    "type": "module",
    "scripts": {
       "dev": "cross-env NODE_ENV=dev nodemon src/server.ts",
-      "test": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/.bin/jest --watchAll",
+      "test": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/.bin/jest",
       "pretty": "prettier src/**/*.ts --write",
       "lint": "eslint src/**/*.ts",
       "lint:fix": "npx eslint src/**/*.ts --fix",
@@ -26,6 +26,7 @@
    "description": "",
    "devDependencies": {
       "@eslint/js": "^9.39.1",
+      "@types/bcrypt": "^6.0.0",
       "@types/express": "^5.0.5",
       "@types/jest": "^29.5.14",
       "@types/node": "^24.10.1",
@@ -52,6 +53,7 @@
       ]
    },
    "dependencies": {
+      "bcrypt": "^6.0.0",
       "dotenv": "^17.2.3",
       "express": "^5.1.0",
       "pg": "^8.14.1",

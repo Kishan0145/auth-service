@@ -12,7 +12,7 @@ const registerController = async (
          firstName,
          lastName,
          email,
-         password,
+         password: password?.toString(),
       };
       const user = await UserService.createUser(payload);
       return res.status(201).json(user);

@@ -15,7 +15,7 @@ console.log(DB_HOST);
 export const AppDataSource = new DataSource({
    type: 'postgres',
    host: DB_HOST || 'localhost',
-   port: DB_PORT ? 5432 : 5432,
+   port: DB_PORT ? parseInt(DB_PORT) : 5432,
    username: POSTGRES_USERNAME || 'postgres',
    password: POSTGRES_PASSWORD || 'password',
    database: POSTGRES_DB || 'db_name',
