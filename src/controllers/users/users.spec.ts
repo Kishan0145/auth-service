@@ -63,6 +63,30 @@ describe('User registration', () => {
       const user = await userRepo.find();
       expect(user[0]).toHaveProperty('role', 'customer');
    });
+   it('should throw 400 if email already exist', async () => {
+      //first request
+      const payload = {
+         firstName: 'Kishan',
+         lastName: 'Sharma',
+         email: 'test@gmail.com',
+         password: 'Test@1234',
+      };
+
+      await request(app).post('/auth/users/register').send(payload);
+
+      //second request
+      const payload2 = {
+         firstName: 'Kishan',
+         lastName: 'Sharma',
+         email: 'test@gmail.com',
+         password: 'Test@1234',
+      };
+
+      const res = await request(app)
+         .post('/auth/users/register')
+         .send(payload2);
+      expect(res.status).toBe(400);
+   });
 
    describe('Required Fields Validation', () => {
       it('should return 400 if there is no firstName', async () => {
