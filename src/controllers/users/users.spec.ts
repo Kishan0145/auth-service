@@ -21,6 +21,7 @@ afterAll(async () => {
 });
 
 describe('User registration', () => {
+   const userRepo = AppDataSource.getRepository(User);
    it('POST should register a new user with status 201 ', async () => {
       const payload = {
          firstName: 'Kishan',
@@ -45,8 +46,37 @@ describe('User registration', () => {
 
       await request(app).post('/auth/users/register').send(payload);
 
-      const user = await AppDataSource.getRepository(User).find();
+      const user = await userRepo.find();
       expect(user).toHaveLength(1);
       expect(user).not.toHaveProperty('password');
+   });
+
+   it('saved user should have a role customer', async () => {
+      const payload = {
+         firstName: 'Kishan',
+         lastName: 'Sharma',
+         email: 'test@gmail.com',
+         password: 'Test@1234',
+      };
+
+      await request(app).post('/auth/users/register').send(payload);
+      const user = await userRepo.find();
+      expect(user[0]).toHaveProperty('role', 'customer');
+   });
+
+   describe('Required Fields Validation', () => {
+      it('should return 400 if there is no firstName', async () => {
+         const payload = {
+            firstName: null,
+            lastName: 'Sharma',
+            email: 'test@gmail.com',
+            password: 'Test@1234',
+         };
+
+         const response = await request(app)
+            .post('/auth/users/register')
+            .send(payload);
+         expect(response.status).toBe(400);
+      });
    });
 });

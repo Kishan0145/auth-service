@@ -11,7 +11,7 @@ const {
    DB_HOST,
    NODE_ENV,
 } = Config;
-console.log(DB_HOST);
+
 export const AppDataSource = new DataSource({
    type: 'postgres',
    host: DB_HOST || 'localhost',
