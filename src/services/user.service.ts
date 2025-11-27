@@ -8,7 +8,6 @@ const createUser = async (payload: RegisterUserInterface) => {
    const { firstName, lastName, email, password } = payload;
    const userRepo = AppDataSource.getRepository(User);
    const isEmailPresent = await userRepo.findOne({ where: { email: email } });
-   console.log('SDSD-->', isEmailPresent);
    if (isEmailPresent) {
       throw createHttpError(400, 'Email is already in use.');
    }
