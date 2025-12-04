@@ -1,8 +1,8 @@
-import app from '../../app.js';
 import request from 'supertest';
-import { AppDataSource } from '../../config/data-source.js';
-import { truncateTables } from '../../utils/tests.js';
-import { User } from '../../entity/User.js';
+import { AppDataSource } from '../config/data-source.js';
+import { User } from '../entity/User.js';
+import { truncateTables } from '../utils/tests.js';
+import app from '../app.js';
 
 beforeAll(async () => {
    if (!AppDataSource.isInitialized) {
