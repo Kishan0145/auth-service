@@ -1,8 +1,9 @@
+import { userShield } from './../../utils/index.js';
 import createHttpError from 'http-errors';
-import { AppDataSource } from '../config/data-source.js';
-import { User } from '../entity/User.js';
-import type { RegisterUserInterface } from '../types/index.js';
-import { hashPassword } from '../utils/password.js';
+import type { RegisterUserInterface } from '../../types/index.js';
+import { AppDataSource } from '../../config/data-source.js';
+import { User } from '../../entity/User.js';
+import { hashPassword } from '../../utils/password.js';
 
 const createUser = async (payload: RegisterUserInterface) => {
    const { firstName, lastName, email, password } = payload;
@@ -19,8 +20,7 @@ const createUser = async (payload: RegisterUserInterface) => {
    user.password = await hashPassword(password);
 
    await userRepo.save(user);
-   delete (user as Partial<Pick<User, 'password'>>).password;
-   return user;
+   return userShield(user);
 };
 
 const UserService = {

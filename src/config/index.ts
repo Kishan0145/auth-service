@@ -18,6 +18,7 @@ const {
    POSTGRES_DB,
    DB_PORT,
    DB_HOST,
+   JWT_SECRET,
 } = process.env;
 export const Config = {
    PORT,
@@ -28,4 +29,5 @@ export const Config = {
    POSTGRES_DB,
    DB_PORT,
    DB_HOST,
+   JWT_SECRET,
 };

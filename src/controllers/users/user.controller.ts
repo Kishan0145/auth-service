@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
-import UserService from '../../services/user.service.js';
+import UserService from '../../services/users/user.service.js';
+import { successResponse } from '../../utils/index.js';
 
 const registerController = async (
    req: Request,
@@ -15,7 +16,7 @@ const registerController = async (
          password: password?.toString(),
       };
       const user = await UserService.createUser(payload);
-      return res.status(201).json(user);
+      return successResponse(201, res, user);
    } catch (e) {
       next(e);
    }
