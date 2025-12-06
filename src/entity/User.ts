@@ -1,8 +1,15 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+   Column,
+   Entity,
+   ManyToOne,
+   OneToMany,
+   PrimaryGeneratedColumn,
+} from 'typeorm';
 import { USER_ROLES } from '../constants/user.constant.js';
+import { Base } from './Base.js';
 
 @Entity()
-export class User {
+export class User extends Base {
    @PrimaryGeneratedColumn()
    id: number;
 
@@ -18,6 +25,28 @@ export class User {
    @Column()
    password: string;
 
-   @Column({ default: USER_ROLES.CUSTOMER })
+   @Column({
+      type: 'enum',
+      enum: USER_ROLES,
+      default: USER_ROLES.CUSTOMER,
+   })
    role: string;
+
+   @OneToMany(() => RefreshTokens, (token) => token.user)
+   refreshTokens: RefreshTokens[];
+}
+
+@Entity()
+export class RefreshTokens extends Base {
+   @PrimaryGeneratedColumn()
+   id: number;
+
+   @Column({ type: 'bigint' })
+   expiresAt: number;
+
+   @Column()
+   refreshToken: string;
+
+   @ManyToOne(() => User, (user) => user.refreshTokens)
+   user: User;
 }

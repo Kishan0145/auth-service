@@ -12,7 +12,7 @@ export const generateAccessToken = (payload: JwtPayload) => {
    const privateKey = readFileSync(keyPath);
    const options: SignOptions = {
       algorithm: 'RS256',
-      expiresIn: 15 * 60,
+      expiresIn: 15 * 60, // 15 min
       issuer: 'auth-service',
    };
    const token = jwt.sign(payload, privateKey, options);
@@ -21,7 +21,7 @@ export const generateAccessToken = (payload: JwtPayload) => {
 
 export const generateRefreshToken = (payload: JwtPayload) => {
    const options: SignOptions = {
-      algorithm: 'RS256',
+      algorithm: 'HS256',
       expiresIn: '1d',
       issuer: 'auth-service',
    };

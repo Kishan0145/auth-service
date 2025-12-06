@@ -19,6 +19,7 @@ const {
    DB_PORT,
    DB_HOST,
    JWT_SECRET,
+   REFRESH_TOKEN_VALIDITY,
 } = process.env;
 export const Config = {
    PORT,
@@ -30,4 +31,5 @@ export const Config = {
    DB_PORT,
    DB_HOST,
    JWT_SECRET,
+   REFRESH_TOKEN_VALIDITY,
 };

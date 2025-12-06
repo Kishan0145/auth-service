@@ -13,8 +13,20 @@ const loginController = async (
          email,
          password,
       };
-      const returnData = await AuthService.login(payload);
-      return successResponse(200, res, returnData);
+      const { userData, accessToken, refreshToken } =
+         await AuthService.login(payload);
+      res.cookie('token', accessToken, {
+         httpOnly: true,
+         secure: true,
+         sameSite: 'strict',
+      });
+      res.cookie('refreshToken', refreshToken, {
+         httpOnly: true,
+         secure: true,
+         sameSite: 'strict',
+         maxAge: 60 * 60 * 24 * 1000, //1 day in milliseconds
+      });
+      return successResponse(200, res, { token: accessToken, userData });
    } catch (e) {
       _next(e);
    }

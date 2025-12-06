@@ -9,6 +9,6 @@ export const verifyPassword = async (
    password: string,
    hashPassword: string
 ) => {
-   const isValidPassword = bcrypt.compare(password, hashPassword);
+   const isValidPassword = await bcrypt.compare(password, hashPassword);
    return isValidPassword;
 };
