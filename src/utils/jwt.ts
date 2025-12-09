@@ -3,13 +3,15 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Config } from '../config/index.js';
+import logger from '../config/logger.js';
 
 const filePathName = fileURLToPath(import.meta.url);
 const __dirname = dirname(filePathName);
-const keyPath = join(__dirname, '../certs/private.pem');
+const privateKeyPath = join(__dirname, '../certs/private.pem');
+const publicKeyPath = join(__dirname, '../certs/public.pem');
 
 export const generateAccessToken = (payload: JwtPayload) => {
-   const privateKey = readFileSync(keyPath);
+   const privateKey = readFileSync(privateKeyPath);
    const options: SignOptions = {
       algorithm: 'RS256',
       expiresIn: 15 * 60, // 15 min
@@ -17,6 +19,17 @@ export const generateAccessToken = (payload: JwtPayload) => {
    };
    const token = jwt.sign(payload, privateKey, options);
    return token;
+};
+
+export const verifyAccessToken = (token: string) => {
+   try {
+      const publicKey = readFileSync(publicKeyPath);
+      const tokenData = jwt.verify(token, publicKey);
+      return tokenData as JwtPayload;
+   } catch (_e) {
+      // logger.error(e)
+      return false;
+   }
 };
 
 export const generateRefreshToken = (payload: JwtPayload) => {

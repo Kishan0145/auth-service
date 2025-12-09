@@ -5,9 +5,9 @@ import { AppDataSource } from '../../config/data-source.js';
 import { User } from '../../entity/User.js';
 import { hashPassword } from '../../utils/password.js';
 
+const userRepo = AppDataSource.getRepository(User);
 const createUser = async (payload: RegisterUserInterface) => {
    const { firstName, lastName, email, password } = payload;
-   const userRepo = AppDataSource.getRepository(User);
    const isEmailPresent = await userRepo.findOne({ where: { email: email } });
    if (isEmailPresent) {
       throw createHttpError(400, 'Email is already in use.');
@@ -23,7 +23,16 @@ const createUser = async (payload: RegisterUserInterface) => {
    return userShield(user);
 };
 
+const getUserById = async (userId: number) => {
+   const user = await userRepo.findOneBy({ id: userId });
+   if (!user) {
+      throw createHttpError(400, 'Invalid user id');
+   }
+   return userShield(user);
+};
+
 const UserService = {
    createUser,
+   getUserById,
 };
 export default UserService;
