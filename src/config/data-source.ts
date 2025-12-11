@@ -19,9 +19,9 @@ export const AppDataSource = new DataSource({
    username: POSTGRES_USERNAME || 'postgres',
    password: POSTGRES_PASSWORD || 'password',
    database: POSTGRES_DB || 'db_name',
-   synchronize: NODE_ENV == 'dev' || NODE_ENV == 'test',
+   synchronize: NODE_ENV == 'test',
    logging: false,
-   entities: [User, RefreshTokens],
-   migrations: [],
+   entities: ['src/entity/**/*.ts'],
+   migrations: ['src/migration/**/*.ts'],
    subscribers: [],
 });

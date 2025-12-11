@@ -8,7 +8,7 @@ import {
 import { USER_ROLES } from '../constants/user.constant.js';
 import { Base } from './Base.js';
 
-@Entity()
+@Entity({ name: 'users' })
 export class User extends Base {
    @PrimaryGeneratedColumn()
    id: number;
@@ -36,7 +36,7 @@ export class User extends Base {
    refreshTokens: RefreshTokens[];
 }
 
-@Entity()
+@Entity({ name: 'refreshTokens' })
 export class RefreshTokens extends Base {
    @PrimaryGeneratedColumn()
    id: number;

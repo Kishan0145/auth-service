@@ -11,7 +11,10 @@
       "lint:fix": "npx eslint src/**/*.ts --fix",
       "prepare": "husky",
       "start": "ts-node src/index.ts",
-      "typeorm": "typeorm-ts-node-commonjs"
+      "typeorm": "node --loader ts-node/esm ./node_modules/typeorm/cli.js",
+      "migration:generate": "npm run typeorm -- migration:generate -d ./src/config/data-source.ts",
+      "migration:run": "npm run typeorm -- migration:run -d ./src/config/data-source.ts",
+      "migration:revert": "npm run typeorm -- migration:revert -d ./src/config/data-source.ts"
    },
    "repository": {
       "type": "git",
