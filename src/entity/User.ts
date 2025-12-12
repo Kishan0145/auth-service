@@ -1,28 +1,30 @@
 import {
    Column,
    Entity,
+   Index,
    ManyToOne,
    OneToMany,
    PrimaryGeneratedColumn,
 } from 'typeorm';
 import { USER_ROLES } from '../constants/user.constant.js';
 import { Base } from './Base.js';
+import { Restaurant } from './Restaurant.js';
 
 @Entity({ name: 'users' })
 export class User extends Base {
    @PrimaryGeneratedColumn()
    id: number;
 
-   @Column()
+   @Column({ type: 'varchar', length: 50 })
    firstName: string;
 
-   @Column()
+   @Column({ type: 'varchar', length: 50 })
    lastName: string;
 
-   @Column({ unique: true })
+   @Column({ type: 'varchar', unique: true, length: 50 })
    email: string;
 
-   @Column()
+   @Column({ type: 'varchar' })
    password: string;
 
    @Column({
@@ -32,12 +34,16 @@ export class User extends Base {
    })
    role: string;
 
-   @OneToMany(() => RefreshTokens, (token) => token.user)
-   refreshTokens: RefreshTokens[];
+   @OneToMany(() => RefreshToken, (token) => token.user)
+   refreshToken: RefreshToken[];
+
+   @Index()
+   @ManyToOne(() => Restaurant, (restaurant) => restaurant.user)
+   restaurant: Restaurant;
 }
 
 @Entity({ name: 'refreshTokens' })
-export class RefreshTokens extends Base {
+export class RefreshToken extends Base {
    @PrimaryGeneratedColumn()
    id: number;
 
@@ -47,6 +53,7 @@ export class RefreshTokens extends Base {
    @Column()
    refreshToken: string;
 
-   @ManyToOne(() => User, (user) => user.refreshTokens)
+   @Index()
+   @ManyToOne(() => User, (user) => user.refreshToken)
    user: User;
 }

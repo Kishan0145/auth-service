@@ -4,7 +4,7 @@ import logger from '../config/logger.js';
 interface HttpError extends Error {
    statusCode?: number;
 }
-export const errorHandler = (
+const errorHandler = (
    err: HttpError,
    req: Request,
    res: Response,
@@ -25,3 +25,5 @@ export const errorHandler = (
       errors: [],
    });
 };
+
+export default errorHandler;

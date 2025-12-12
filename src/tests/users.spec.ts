@@ -12,6 +12,7 @@ beforeAll(async () => {
 
 beforeEach(async () => {
    await truncateTables();
+   await truncateTables();
 });
 
 afterAll(async () => {
@@ -31,7 +32,7 @@ describe('User registration', () => {
       };
 
       const response = await request(app)
-         .post('/auth/users/register')
+         .post('/api/user/register')
          .send(payload);
       expect(response.status).toBe(201);
    });
@@ -44,7 +45,7 @@ describe('User registration', () => {
          password: 'Test@1234',
       };
 
-      await request(app).post('/auth/users/register').send(payload);
+      await request(app).post('/api/user/register').send(payload);
 
       const user = await userRepo.find();
       expect(user).toHaveLength(1);
@@ -59,7 +60,7 @@ describe('User registration', () => {
          password: 'Test@1234',
       };
 
-      await request(app).post('/auth/users/register').send(payload);
+      await request(app).post('/api/user/register').send(payload);
       const user = await userRepo.find();
       expect(user[0]).toHaveProperty('role', 'customer');
    });
@@ -72,7 +73,7 @@ describe('User registration', () => {
          password: 'Test@1234',
       };
 
-      await request(app).post('/auth/users/register').send(payload);
+      await request(app).post('/api/user/register').send(payload);
 
       //second request
       const payload2 = {
@@ -82,9 +83,7 @@ describe('User registration', () => {
          password: 'Test@1234',
       };
 
-      const res = await request(app)
-         .post('/auth/users/register')
-         .send(payload2);
+      const res = await request(app).post('/api/user/register').send(payload2);
       expect(res.status).toBe(400);
    });
 
@@ -98,7 +97,7 @@ describe('User registration', () => {
          };
 
          const response = await request(app)
-            .post('/auth/users/register')
+            .post('/api/user/register')
             .send(payload);
          expect(response.status).toBe(400);
       });
@@ -111,7 +110,7 @@ describe('User registration', () => {
          };
 
          const response = await request(app)
-            .post('/auth/users/register')
+            .post('/api/user/register')
             .send(payload);
          expect(response.status).toBe(400);
       });
@@ -124,7 +123,7 @@ describe('User registration', () => {
          };
 
          const response = await request(app)
-            .post('/auth/users/register')
+            .post('/api/user/register')
             .send(payload);
          expect(response.status).toBe(400);
       });
@@ -137,7 +136,7 @@ describe('User registration', () => {
          };
 
          const response = await request(app)
-            .post('/auth/users/register')
+            .post('/api/user/register')
             .send(payload);
          expect(response.status).toBe(400);
       });

@@ -1,6 +1,6 @@
 import createHttpError from 'http-errors';
 import { AppDataSource } from '../../config/data-source.js';
-import { RefreshTokens, User } from '../../entity/User.js';
+import { RefreshToken, User } from '../../entity/User.js';
 import type { loginPayloadInterface } from '../../types/index.js';
 import { verifyPassword } from '../../utils/password.js';
 import { generateAccessToken, generateRefreshToken } from '../../utils/jwt.js';
@@ -8,7 +8,7 @@ import { userShield } from '../../utils/index.js';
 import { Config } from '../../config/index.js';
 
 const userRepo = AppDataSource.getRepository(User);
-const refreshTokenRepo = AppDataSource.getRepository(RefreshTokens);
+const refreshTokenRepo = AppDataSource.getRepository(RefreshToken);
 
 const login = async (payload: loginPayloadInterface) => {
    const { email, password } = payload;

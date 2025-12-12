@@ -23,20 +23,20 @@ describe('Should login and logout user', () => {
       const resisterPayload = {
          firstName: 'Test',
          lastName: 'User',
-         email: 'test@gmail.com',
+         email: 'test2@gmail.com',
          password: 'Test@1234', // Use proper password hashing
          role: 'user',
       };
       const registerRes = await request(app)
-         .post('/auth/users/register')
+         .post('/api/user/register')
          .send(resisterPayload);
       expect(registerRes.status).toBe(201);
 
       const payload = {
-         email: 'test@gmail.com',
+         email: 'test2@gmail.com',
          password: 'Test@1234',
       };
-      const response = await request(app).post('/auth/login').send(payload);
+      const response = await request(app).post('/api/login').send(payload);
       expect(response.status).toBe(200);
    });
    it('should return 401 if user does not exist', async () => {
@@ -45,7 +45,7 @@ describe('Should login and logout user', () => {
          password: 'Test@1234',
       };
 
-      const response = await request(app).post('/auth/login').send(payload);
+      const response = await request(app).post('/api/login').send(payload);
 
       expect(response.status).toBe(401);
    });

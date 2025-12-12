@@ -3,11 +3,20 @@ export interface RegisterUserInterface {
    lastName: string;
    email: string;
    password: string;
+   role: string;
 }
 
 export interface loginPayloadInterface {
    email: string;
    password: string;
+}
+
+export interface RegisterRestaurantInterface {
+   name: string;
+   address: string;
+   type: number;
+   phone: string;
+   email: string;
 }
 
 // @typescript-eslint/no-namespace

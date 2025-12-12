@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
-import { RefreshTokens, User } from '../entity/User.js';
 import { Config } from './index.js';
 
 const {

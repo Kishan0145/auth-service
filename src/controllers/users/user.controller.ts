@@ -1,6 +1,8 @@
 import type { NextFunction, Request, Response } from 'express';
 import UserService from '../../services/users/user.service.js';
 import { successResponse } from '../../utils/index.js';
+import type { RegisterUserInterface } from '../../types/index.js';
+import { USER_ROLES } from '../../constants/user.constant.js';
 
 const registerController = async (
    req: Request,
@@ -8,12 +10,14 @@ const registerController = async (
    next: NextFunction
 ) => {
    try {
-      const { firstName, lastName, email, password } = req.body;
+      const { firstName, lastName, email, password, role } =
+         req.body as RegisterUserInterface;
       const payload = {
          firstName,
          lastName,
          email,
          password: password?.toString(),
+         role: role || USER_ROLES.CUSTOMER,
       };
       const user = await UserService.createUser(payload);
       return successResponse(201, res, user);
