@@ -44,11 +44,14 @@ describe('User registration', () => {
          password: 'Test@1234',
       };
 
-      await request(app).post('/auth/users/register').send(payload);
+      const response = await request(app)
+         .post('/auth/users/register')
+         .send(payload);
 
       const user = await userRepo.find();
       expect(user).toHaveLength(1);
-      expect(user).not.toHaveProperty('password');
+      expect(user[0]).not.toHaveProperty('password');
+      expect(response.body.data).not.toHaveProperty('password');
    });
 
    it('saved user should have a role customer', async () => {
@@ -134,6 +137,32 @@ describe('User registration', () => {
             lastName: 'Sharma',
             email: 'test@gmail.com',
             password: null,
+         };
+
+         const response = await request(app)
+            .post('/auth/users/register')
+            .send(payload);
+         expect(response.status).toBe(400);
+      });
+      it('should return 400 if password is too short', async () => {
+         const payload = {
+            firstName: 'Kishan',
+            lastName: 'Sharma',
+            email: 'test@gmail.com',
+            password: 'Test@12',
+         };
+
+         const response = await request(app)
+            .post('/auth/users/register')
+            .send(payload);
+         expect(response.status).toBe(400);
+      });
+      it('should return 400 if password lacks special characters', async () => {
+         const payload = {
+            firstName: 'Kishan',
+            lastName: 'Sharma',
+            email: 'test@gmail.com',
+            password: 'Test12345',
          };
 
          const response = await request(app)

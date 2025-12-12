@@ -6,9 +6,12 @@ export const validateRequest = (schema: z.ZodObject) => {
       const result = schema.safeParse(req.body);
       if (!result.success) {
          return res.status(400).json({
-            error: false,
+            success: false,
             message: 'Validation Failed',
-            errors: JSON.parse(result.error?.toString()),
+            errors: result.error.errors.map((err) => ({
+               path: err.path.join('.'),
+               message: err.message,
+            })),
          });
       } else {
          next();

@@ -2,8 +2,8 @@ import type { Response } from 'express';
 import type { User } from '../entity/User.js';
 
 export const userShield = (user: User) => {
-   delete (user as Partial<Pick<User, 'password'>>).password;
-   return user;
+   const { password: _password, ...userWithoutPassword } = user;
+   return userWithoutPassword;
 };
 
 export const successResponse = (

@@ -8,7 +8,10 @@ import { hashPassword } from '../../utils/password.js';
 const userRepo = AppDataSource.getRepository(User);
 const createUser = async (payload: RegisterUserInterface) => {
    const { firstName, lastName, email, password } = payload;
-   const isEmailPresent = await userRepo.findOne({ where: { email: email } });
+   const normalizedEmail = email.toLowerCase();
+   const isEmailPresent = await userRepo.findOne({
+      where: { email: normalizedEmail },
+   });
    if (isEmailPresent) {
       throw createHttpError(400, 'Email is already in use.');
    }
@@ -16,7 +19,7 @@ const createUser = async (payload: RegisterUserInterface) => {
 
    user.firstName = firstName;
    user.lastName = lastName;
-   user.email = email;
+   user.email = normalizedEmail;
    user.password = await hashPassword(password);
 
    await userRepo.save(user);
