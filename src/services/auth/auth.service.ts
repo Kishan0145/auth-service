@@ -12,7 +12,8 @@ const refreshTokenRepo = AppDataSource.getRepository(RefreshTokens);
 
 const login = async (payload: loginPayloadInterface) => {
    const { email, password } = payload;
-   const user = await userRepo.findOneBy({ email: email });
+   const normalizedEmail = email.toLowerCase();
+   const user = await userRepo.findOneBy({ email: normalizedEmail });
    if (!user) {
       throw createHttpError(401, 'User does not exist, kindly register first.');
    }
