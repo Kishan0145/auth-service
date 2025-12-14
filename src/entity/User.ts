@@ -38,8 +38,11 @@ export class User extends Base {
    refreshToken: RefreshToken[];
 
    @Index()
-   @ManyToOne(() => Restaurant, (restaurant) => restaurant.user)
-   restaurant: Restaurant;
+   @ManyToOne(() => Restaurant, (restaurant) => restaurant.user, {
+      nullable: true,
+      onDelete: 'SET NULL',
+   })
+   restaurant?: Restaurant;
 }
 
 @Entity({ name: 'refreshTokens' })

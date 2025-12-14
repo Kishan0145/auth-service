@@ -12,7 +12,10 @@ const refreshTokenRepo = AppDataSource.getRepository(RefreshToken);
 
 const login = async (payload: loginPayloadInterface) => {
    const { email, password } = payload;
-   const user = await userRepo.findOneBy({ email: email });
+   const user = await userRepo.findOne({
+      where: { email: email },
+      relations: ['restaurant'],
+   });
    if (!user) {
       throw createHttpError(401, 'User does not exist, kindly register first.');
    }
@@ -25,9 +28,9 @@ const login = async (payload: loginPayloadInterface) => {
    const tokenPayload = {
       id: user.id,
       role: user.role,
+      restaurantId: user.restaurant?.id || null,
       type: 'access',
    };
-
    const accessToken = generateAccessToken(tokenPayload);
    const refreshToken = generateRefreshToken({
       ...tokenPayload,

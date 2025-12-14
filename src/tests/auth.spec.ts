@@ -25,7 +25,6 @@ describe('Should login and logout user', () => {
          lastName: 'User',
          email: 'test2@gmail.com',
          password: 'Test@1234', // Use proper password hashing
-         role: 'user',
       };
       const registerRes = await request(app)
          .post('/api/user/register')

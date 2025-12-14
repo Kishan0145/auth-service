@@ -17,6 +17,7 @@ const auth = (req: Request, res: Response, next: NextFunction) => {
       req.user = {
          id: tokenData.id,
          role: tokenData.role,
+         restaurantId: tokenData?.restaurantId || null,
       };
       next();
    } catch (e) {

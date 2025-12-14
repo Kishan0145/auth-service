@@ -17,10 +17,10 @@ export class Restaurant extends Base {
    @Column({ type: 'enum', enum: RESTAURANTS_TYPES })
    type: number;
 
-   @Column({ type: 'varchar', length: 20 })
+   @Column({ type: 'varchar', length: 20, unique: true })
    phone: string;
 
-   @Column({ type: 'varchar', length: 20 })
+   @Column({ type: 'varchar', length: 20, unique: true })
    email: string;
 
    @OneToMany(() => User, (user) => user.restaurant)

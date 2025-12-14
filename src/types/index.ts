@@ -3,7 +3,8 @@ export interface RegisterUserInterface {
    lastName: string;
    email: string;
    password: string;
-   role: string;
+   role?: string;
+   restaurantId?: number;
 }
 
 export interface loginPayloadInterface {
@@ -26,6 +27,7 @@ declare global {
          user: {
             id: number;
             role: string;
+            restaurantId?: number | null;
          };
       }
    }
