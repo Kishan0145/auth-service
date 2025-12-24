@@ -5,8 +5,6 @@ import type {
 } from '../../types/index.js';
 import restaurantService from '../../services/restaurant/restaurant.service.js';
 import { successResponse } from '../../utils/index.js';
-import { USER_ROLES } from '../../constants/user.constant.js';
-import createHttpError from 'http-errors';
 import UserService from '../../services/users/user.service.js';
 
 const registerController = async (

@@ -80,9 +80,14 @@ const updateUser = async (
    id: number,
    payload: Omit<RegisterUserInterface, 'password'>
 ) => {
+   await userRepo.update({ id: id }, { ...payload });
    const updatedUser = await getUserById(id);
-   await userRepo.update({ id: 1 }, { ...payload });
    return userShield(updatedUser);
+};
+
+const getAllUsers = async () => {
+   const users = await userRepo.find();
+   return users.map((user) => userShield(user));
 };
 
 const UserService = {
@@ -90,5 +95,6 @@ const UserService = {
    getUserById,
    getSingleUser,
    updateUser,
+   getAllUsers,
 };
 export default UserService;

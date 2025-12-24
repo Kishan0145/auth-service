@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 import UserService from '../../services/users/user.service.js';
-import { successResponse } from '../../utils/index.js';
+import { isEmptyObject, successResponse } from '../../utils/index.js';
 import type { RegisterUserInterface } from '../../types/index.js';
 import { USER_ROLES } from '../../constants/user.constant.js';
 import createHttpError from 'http-errors';
@@ -74,6 +74,9 @@ const updateUserController = async (
    next: NextFunction
 ) => {
    try {
+      if (isEmptyObject(req.body)) {
+         throw createHttpError(400, "Payload can't be empty");
+      }
       const { firstName, lastName, email, role } =
          req.body as RegisterUserInterface;
       const id = req.params.id;
@@ -88,19 +91,23 @@ const updateUserController = async (
          firstName,
          lastName,
          email,
+         role: role || USER_ROLES.CUSTOMER,
       };
-
-      if (
-         req.user.role == USER_ROLES.ADMIN ||
-         req.user.role == USER_ROLES.SUPER_ADMIN
-      ) {
-         payload['role' as keyof typeof payload] = role!;
-      } else if (role) {
-         throw createHttpError(403, 'Access Denied, You cannot update role');
-      }
-
       const updatedUser = await UserService.updateUser(parseInt(id), payload);
       return successResponse(200, res, updatedUser);
+   } catch (e) {
+      next(e);
+   }
+};
+
+const getAllUsersController = async (
+   req: Request,
+   res: Response,
+   next: NextFunction
+) => {
+   try {
+      const users = await UserService.getAllUsers();
+      return successResponse(200, res, users);
    } catch (e) {
       next(e);
    }
@@ -111,6 +118,7 @@ const usersControllers = {
    getCurrentUserController,
    getSingleUserController,
    updateUserController,
+   getAllUsersController,
 };
 
 export default usersControllers;

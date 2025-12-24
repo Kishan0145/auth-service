@@ -29,3 +29,17 @@ export const userLoginSchema = z.object({
    email: z.email().trim(),
    password: z.string().trim(),
 });
+
+export const userUpdateSchema = z.object({
+   firstName: z.string().trim().min(1, 'firstName cannot be empty').optional(),
+   lastName: z.string().trim().min(1, 'Last Name cannot be empty').optional(),
+   email: z.email().trim().optional(),
+   role: z
+      .string()
+      .trim()
+      .optional()
+      .refine((role) => !role || allowedRoles.some((r) => r == role), {
+         message: 'Invalid role',
+      }),
+   restaurantId: z.number().optional(),
+});

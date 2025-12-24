@@ -5,7 +5,6 @@ import auth from '../middleware/auth.js';
 import userPermission from '../middleware/userPermission.js';
 import restaurantController from '../controllers/restaurants/restaurant.controller.js';
 import { userRegistrationsSchema } from '../validators/users.validator.js';
-import { PERMISSIONS, USER_ROLES } from '../constants/user.constant.js';
 
 const { registerController, manageUserController } = restaurantController;
 const restaurantRoute = Router();
@@ -13,14 +12,14 @@ restaurantRoute.post(
    '/register',
    validateRequest(restaurantRegistrationSchema),
    auth,
-   userPermission(PERMISSIONS.CREATE_RESTAURANT),
+   userPermission(),
    registerController
 );
 restaurantRoute.post(
    '/user-register',
    validateRequest(userRegistrationsSchema),
    auth,
-   userPermission(PERMISSIONS.CREATE_RESTAURANT_USER),
+   userPermission(),
    manageUserController
 );
 export default restaurantRoute;

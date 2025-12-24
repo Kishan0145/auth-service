@@ -18,3 +18,7 @@ export const successResponse = (
       status: passStatus.includes(status),
    });
 };
+
+export const isEmptyObject = (object: object) => {
+   return Object.keys(object).length == 0 ? true : false;
+};

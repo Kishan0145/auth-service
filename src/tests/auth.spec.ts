@@ -36,6 +36,7 @@ describe('Should login and logout user', () => {
          password: 'Test@1234',
       };
       const response = await request(app).post('/api/login').send(payload);
+      console.log(response);
       expect(response.status).toBe(200);
    });
    it('should return 401 if user does not exist', async () => {

@@ -1,10 +1,13 @@
 import { Router } from 'express';
 import usersControllers from '../controllers/users/user.controller.js';
 import validateRequest from '../middleware/validateRequest.js';
-import { userRegistrationsSchema } from '../validators/users.validator.js';
+import {
+   userRegistrationsSchema,
+   userUpdateSchema,
+} from '../validators/users.validator.js';
 import auth from '../middleware/auth.js';
 import userPermission from '../middleware/userPermission.js';
-import { PERMISSIONS, USER_ROLES } from '../constants/user.constant.js';
+import { USER_ROLES } from '../constants/user.constant.js';
 const userRouter = Router();
 
 const {
@@ -12,6 +15,7 @@ const {
    getCurrentUserController,
    getSingleUserController,
    updateUserController,
+   getAllUsersController,
 } = usersControllers;
 
 userRouter.post(
@@ -20,13 +24,24 @@ userRouter.post(
    registerController
 );
 userRouter.get('/get-current-user-data', auth, getCurrentUserController);
-userRouter.get('/:id', auth, getSingleUserController);
-userRouter.put(
-   '/update/:id',
-   validateRequest(userRegistrationsSchema),
+userRouter.get(
+   '/:id',
    auth,
-   userPermission(PERMISSIONS.UPDATE_USER),
+   userPermission([USER_ROLES.ADMIN]),
+   getSingleUserController
+);
+userRouter.patch(
+   '/update/:id',
+   validateRequest(userUpdateSchema),
+   auth,
+   userPermission([USER_ROLES.ADMIN]),
    updateUserController
+);
+userRouter.get(
+   '/',
+   auth,
+   userPermission([USER_ROLES.ADMIN]),
+   getAllUsersController
 );
 
 export default userRouter;

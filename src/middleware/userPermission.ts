@@ -1,19 +1,12 @@
 import type { NextFunction, Request, Response } from 'express';
-import {
-   ROLE_WISE_PERMISSIONS,
-   USER_ROLES,
-} from '../constants/user.constant.js';
+import { USER_ROLES } from '../constants/user.constant.js';
 import createHttpError from 'http-errors';
 
-const userPermission = (permission: string) => {
-   // const roles = [USER_ROLES.SUPER_ADMIN, ...allowedRoles];
+const userPermission = (allowedRoles: string[] = []) => {
+   const roles = [USER_ROLES.SUPER_ADMIN, ...allowedRoles];
    return (req: Request, res: Response, next: NextFunction) => {
       const userRole = req.user.role;
-      if (
-         !ROLE_WISE_PERMISSIONS[
-            userRole as keyof typeof ROLE_WISE_PERMISSIONS
-         ]?.includes(permission)
-      ) {
+      if (!roles.includes(userRole)) {
          throw createHttpError(403, 'Access Denied');
       }
       if (userRole == USER_ROLES.ADMIN || userRole == USER_ROLES.MANAGER) {
