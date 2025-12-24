@@ -20,7 +20,7 @@ export const AppDataSource = new DataSource({
    database: POSTGRES_DB || 'db_name',
    synchronize: NODE_ENV == 'test',
    logging: false,
-   entities: ['src/entity/**/*.ts'],
-   migrations: ['src/migration/**/*.ts'],
+   entities: ['src/entity/**/*{.js,.ts}'],
+   migrations: ['src/migration/**/*{.js,.ts}'],
    subscribers: [],
 });
