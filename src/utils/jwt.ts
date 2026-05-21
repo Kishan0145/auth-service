@@ -16,7 +16,7 @@ export const generateAccessToken = (payload: JwtPayload) => {
    if (!privateKey) {
       throw createHttpError(
          500,
-         'Private key path is not defined in environment variables'
+         'Private key is not defined in environment variables'
       );
    }
    const options: SignOptions = {
