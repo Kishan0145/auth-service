@@ -3,7 +3,6 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Config } from '../config/index.js';
-import logger from '../config/logger.js';
 import createHttpError from 'http-errors';
 
 const filePathName = fileURLToPath(import.meta.url);
