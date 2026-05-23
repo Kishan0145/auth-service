@@ -23,6 +23,18 @@ jobs:
         run: npm ci
       - name: Run lint
         run: npm run lint
+      - name: Debug DB connection
+        run: |
+          echo "DB_HOST length: ${#DB_HOST}"
+          echo "DB_PORT: $DB_PORT"
+          echo "POSTGRES_DB length: ${#POSTGRES_DB}"
+          echo "POSTGRES_USERNAME length: ${#POSTGRES_USERNAME}"
+          node -e "require('dns').lookup(process.env.DB_HOST, {family:4}, (e,a) => console.log('DNS IPv4:', e ? e.message : a))"
+        env:
+          DB_HOST: ${{ secrets.TEST_DB_HOST }}
+          DB_PORT: ${{ secrets.TEST_DB_PORT }}
+          POSTGRES_DB: ${{ secrets.TEST_DB_NAME }}
+          POSTGRES_USERNAME: ${{ secrets.TEST_DB_USER }}
       - name: Run tests
         run: npm test
         env:
