@@ -18,9 +18,13 @@ export const AppDataSource = new DataSource({
    username: POSTGRES_USERNAME || 'postgres',
    password: POSTGRES_PASSWORD || 'password',
    database: POSTGRES_DB || 'db_name',
+   // synchronize auto-creates/updates the schema from entities — only safe in test.
+   // Dev and prod use explicit migrations instead to avoid accidental data loss.
    synchronize: NODE_ENV == 'test',
    logging: false,
    entities: ['src/entity/**/*{.js,.ts}'],
-   migrations: ['src/migration/**/*{.js,.ts}'],
+   // Migrations don't run in test (synchronize handles schema there), so pass an
+   // empty array to avoid the same glob-based dynamic import problem described above.
+   migrations: NODE_ENV === 'test' ? [] : ['src/migration/**/*{.js,.ts}'],
    subscribers: [],
 });
