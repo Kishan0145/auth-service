@@ -8,7 +8,7 @@ import createHttpError from 'http-errors';
 const filePathName = fileURLToPath(import.meta.url);
 const __dirname = dirname(filePathName);
 // const privateKeyPath = Config.PRIVATE_KEY ;
-const publicKeyPath = join(__dirname, '../certs/public.pem');
+const publicKeyPath = join(__dirname, '../../public.pem');
 
 export const generateAccessToken = (payload: JwtPayload) => {
    const privateKey = Config.PRIVATE_KEY;
