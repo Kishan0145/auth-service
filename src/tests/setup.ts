@@ -4,7 +4,7 @@ import { AppDataSource } from '../config/data-source.js';
 // connection per suite — no shared state across suites.
 beforeAll(async () => {
    await AppDataSource.initialize();
-});
+}, 30000);
 
 afterAll(async () => {
    await AppDataSource.destroy();

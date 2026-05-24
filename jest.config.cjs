@@ -35,4 +35,8 @@ module.exports = {
   // Exclude node_modules (standard) and the setup file itself — setup.ts contains
   // only beforeAll hooks, not tests, so Jest would fail it for having no test cases
   testPathIgnorePatterns: ['/node_modules/', '/src/tests/setup.ts'],
+
+  // Run suites serially — all suites share the same remote Supabase DB, so parallel
+  // workers would race on TRUNCATE and exhaust the connection pool causing flaky timeouts
+  maxWorkers: 1,
 };
